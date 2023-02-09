@@ -49,17 +49,16 @@ class _RecipeViewerState extends State<RecipeViewer> {
             icon: const MacosIcon(CupertinoIcons.pencil_circle),
             showLabel: false,
             tooltipMessage: 'Edit the recipe',
-            onPressed: () {
-              
-            },
+            onPressed: () {},
           ),
           ToolBarIconButton(
             label: 'Delete',
             icon: const MacosIcon(CupertinoIcons.delete_left),
             showLabel: false,
             tooltipMessage: 'Delete the recipe',
-            onPressed: () {
-              deleteRecipe();
+            onPressed: () async {
+              // deleteRecipe();
+              _showMyDialog();
             },
           ),
         ],
@@ -88,14 +87,18 @@ class _RecipeViewerState extends State<RecipeViewer> {
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(4.0),
                               ),
-                              child: Image.network(
-                                recipe.imagePath!,
-                                fit: BoxFit.fitWidth,
-                              ),
+                              child: recipe.imagePath == null
+                                  ? Image.asset(
+                                      'assets/images/${recipe.category.replaceAll(' ', '').toLowerCase()}.png',
+                                      fit: BoxFit.fitWidth,
+                                    )
+                                  : Image.network(
+                                      recipe.imagePath!,
+                                      fit: BoxFit.fitWidth,
+                                    ),
                             ),
                           ),
                           Expanded(
-                            
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -119,6 +122,22 @@ class _RecipeViewerState extends State<RecipeViewer> {
                                 RatingIndicator(
                                   value: difficulty,
                                   iconColor: Colors.white54,
+                                  ratedIcon: (recipe.category ==
+                                          'Breakfast and Brunch')
+                                      ? Icons.egg
+                                      : (recipe.category == 'Pasta')
+                                          ? Icons.ramen_dining_rounded
+                                          : (recipe.category == 'Mains')
+                                              ? Icons.lunch_dining_rounded
+                                              : Icons.cake,
+                                  unratedIcon: (recipe.category ==
+                                          'Breakfast and Brunch')
+                                      ? Icons.egg_outlined
+                                      : (recipe.category == 'Pasta')
+                                          ? Icons.ramen_dining_outlined
+                                          : (recipe.category == 'Mains')
+                                              ? Icons.lunch_dining_outlined
+                                              : Icons.cake_outlined,
                                 ),
                                 const SizedBox(
                                   height: 10,
@@ -251,32 +270,29 @@ class _RecipeViewerState extends State<RecipeViewer> {
                             const BorderRadius.all(Radius.circular(8))),
                     width: double.infinity,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListView.builder(
-                        physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    controller: scrollController,
-                                    itemCount: instructions.length,
-                                    itemBuilder: ((context, index) {
-                                      return Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Text('${index+1}. '),
-                                              Text(instructions[index])],
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                        ],
-                                      );
-                                    })
-                      )
-                    ),
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            controller: scrollController,
+                            itemCount: instructions.length,
+                            itemBuilder: ((context, index) {
+                              return Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text('${index + 1}. '),
+                                      Text(instructions[index])
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                ],
+                              );
+                            }))),
                   )
                 ],
               ),
@@ -292,5 +308,47 @@ class _RecipeViewerState extends State<RecipeViewer> {
       if (!mounted) return;
       Navigator.of(context).pop(true);
     });
+  }
+
+  Future<void> _showMyDialog() async {
+    return showMacosAlertDialog(
+      context: context,
+      builder: (_) => MacosAlertDialog(
+        appIcon: Icon(
+          (recipe.category == 'Breakfast and Brunch')
+              ? Icons.egg
+              : (recipe.category == 'Pasta')
+                  ? Icons.ramen_dining_rounded
+                  : (recipe.category == 'Mains')
+                      ? Icons.lunch_dining_rounded
+                      : Icons.cake,
+        ),
+        title: Text(
+          'Are you sure you want to delete the recipe?',
+          style: MacosTheme.of(context).typography.headline,
+        ),
+        message: Text(
+          'This action is irreversible',
+          textAlign: TextAlign.center,
+          style: MacosTheme.of(context).typography.body,
+        ),
+        primaryButton: PushButton(
+          buttonSize: ButtonSize.large,
+          child: const Text('Delete the recipe'),
+          onPressed: () {
+            Navigator.of(context).pop();
+            deleteRecipe();
+          },
+        ),
+        secondaryButton: PushButton(
+          color: MacosThemeData.dark().pushButtonTheme.secondaryColor,
+          buttonSize: ButtonSize.large,
+          child: const Text('Cancel'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
+    );
   }
 }

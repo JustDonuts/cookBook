@@ -50,6 +50,8 @@ class _RecipeByCatScreenState extends State<RecipeByCatScreen> {
             padding: const EdgeInsets.all(50.0),
             child: Text(widget.recipesCategory, style: const TextStyle(fontSize: 30),),
           ),
+          if (recipeBox.isEmpty)
+          const Text('You have no recipes yet, add them by using the button in the bottom left corner', style: TextStyle(color: Colors.white30)),
               Expanded(
                 child: Padding(
                     padding: const EdgeInsets.all(12.0),

@@ -362,7 +362,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                                                     iconSize: 25,
                                                     ratedIcon: (recipeCat ==
                                                             'Breakfast and Brunch')
-                                                        ? Icons.cookie_rounded
+                                                        ? Icons.egg
                                                         : (recipeCat == 'Pasta')
                                                             ? Icons
                                                                 .ramen_dining_rounded
@@ -373,7 +373,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                                                                 : Icons.cake,
                                                     unratedIcon: (recipeCat ==
                                                             'Breakfast and Brunch')
-                                                        ? Icons.cookie_outlined
+                                                        ? Icons.egg_outlined
                                                         : (recipeCat == 'Pasta')
                                                             ? Icons
                                                                 .ramen_dining_outlined
@@ -382,7 +382,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                                                                 ? Icons
                                                                     .lunch_dining_outlined
                                                                 : Icons
-                                                                    .cake_outlined,
+                                                                    .cake,
                                                     amount: 5,
                                                     value: difficultyValue,
                                                     onChanged: (v) {

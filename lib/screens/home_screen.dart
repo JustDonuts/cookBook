@@ -23,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
   late Box<ReadRecModel> recipes2readBox;
   late ValueListenable listenable;
   late List<ReadRecModel> filteredReadRecs;
+  late List<RecipeModel> allRecipesInit = [];
+  bool get hasRecipes => allRecipesInit.isEmpty && recipes2readBox.isEmpty;
 
   final List<String> catNames = [
     'Breakfast and Brunch',
@@ -42,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     for (String cat in catNames) {
       recipeBox = Hive.box(cat);
       allRecipes.addAll(recipeBox.values);
+      allRecipesInit.addAll(recipeBox.values);
     }
     filteredRecipes = allRecipes
         .where((element) => element.title.toLowerCase().contains(''))
@@ -54,8 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void search(String query) {
+    List<RecipeModel> allRecipes = [];
     setState(() {
-      List<RecipeModel> allRecipes = [];
       for (String cat in catNames) {
         recipeBox = Hive.box(cat);
         allRecipes.addAll(recipeBox.values);
@@ -82,6 +85,30 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(fontSize: 30),
           ),
         ),
+
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 1000),
+            child: SizedBox(
+                height: 400,
+                width: double.infinity,
+                child: Image.asset(
+                  'assets/images/home_bg.jpg',
+                  fit: BoxFit.cover,
+                  alignment: Alignment.bottomCenter,
+                )),
+          ),
+        ),
+        if (hasRecipes)
+          const Padding(
+            padding: EdgeInsets.fromLTRB(60, 0, 60, 60),
+            child: Text(
+              'Welcome to cookBook, an open source Flutter app to save your favourite recipes! \n\n Once you add some recipes, you will be able to search for them below. ',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white38),
+            ),
+          ),
 
         // DOESNT TRIGGER ONCHANGED WHEN FIELD IS EMPTY
         // MacosSearchField(
@@ -212,10 +239,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       value: recipe.difficulty,
                                                       iconColor: Colors.white30,
                                                       iconSize: 20,
+                                                      amount: recipe.difficulty
+                                                              .toInt() +
+                                                          1,
                                                       ratedIcon: (recipe
                                                                   .category ==
                                                               'Breakfast and Brunch')
-                                                          ? Icons.cookie_rounded
+                                                          ? Icons.egg
                                                           : (recipe.category ==
                                                                   'Pasta')
                                                               ? Icons
@@ -228,8 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       unratedIcon: (recipe
                                                                   .category ==
                                                               'Breakfast and Brunch')
-                                                          ? Icons
-                                                              .cookie_outlined
+                                                          ? Icons.egg_outlined
                                                           : (recipe.category ==
                                                                   'Pasta')
                                                               ? Icons
@@ -262,91 +291,96 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                  child: Column(
-                    children: [
-                      const Text(
-                        'Saved recipes:',
-                        style: TextStyle(color: Colors.white30),
-                      ),
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: ValueListenableBuilder(
-                          valueListenable: listenable,
-                          builder: (context, value, child) {
-                            return ListView.builder(
-                                itemCount: filteredReadRecs.length,
-                                itemBuilder: ((context, index) {
-                                  final recipe = filteredReadRecs[index];
-                                  if (filteredReadRecs.isNotEmpty) {
-                                    debugPrint('notEmpty');
-                                    return Card(
-                                      color:
-                                          MacosTheme.of(context).dividerColor,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Row(
-                                          children: [
-                                            if (recipe.category == catNames[0])
-                                              Text(
-                                                catSimbols[0],
-                                                style: const TextStyle(
-                                                    fontSize: 20),
-                                              ),
-                                            if (recipe.category == catNames[1])
-                                              Text(
-                                                catSimbols[1],
-                                                style: const TextStyle(
-                                                    fontSize: 20),
-                                              ),
-                                            if (recipe.category == catNames[2])
-                                              Text(
-                                                catSimbols[2],
-                                                style: const TextStyle(
-                                                    fontSize: 20),
-                                              ),
-                                            if (recipe.category == catNames[3])
-                                              Text(
-                                                catSimbols[3],
-                                                style: const TextStyle(
-                                                    fontSize: 20),
-                                              ),
-                                            Text(
-                                              recipe.title,
-                                              style: const TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                            Expanded(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  MacosIconButton(
-                                                    icon: const MacosIcon(
-                                                        CupertinoIcons.link),
-                                                    onPressed: (() {
-                                                      _launchUrl(recipe.link);
-                                                    }),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    debugPrint('Empty');
-                                    return const Text('No recipes found...');
-                                  }
-                                }));
-                          },
+              Container(
+                constraints: const BoxConstraints(maxWidth: 350),
+                child: Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Saved recipes:',
+                          style: TextStyle(color: Colors.white30),
                         ),
-                      )),
-                    ],
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: ValueListenableBuilder(
+                            valueListenable: listenable,
+                            builder: (context, value, child) {
+                              return ListView.builder(
+                                  itemCount: filteredReadRecs.length,
+                                  itemBuilder: ((context, index) {
+                                    final recipe = filteredReadRecs[index];
+                                    if (filteredReadRecs.isNotEmpty) {
+                                      return Card(
+                                        color:
+                                            MacosTheme.of(context).dividerColor,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Row(
+                                            children: [
+                                              if (recipe.category ==
+                                                  catNames[0])
+                                                Text(
+                                                  catSimbols[0],
+                                                  style: const TextStyle(
+                                                      fontSize: 20),
+                                                ),
+                                              if (recipe.category ==
+                                                  catNames[1])
+                                                Text(
+                                                  catSimbols[1],
+                                                  style: const TextStyle(
+                                                      fontSize: 20),
+                                                ),
+                                              if (recipe.category ==
+                                                  catNames[2])
+                                                Text(
+                                                  catSimbols[2],
+                                                  style: const TextStyle(
+                                                      fontSize: 20),
+                                                ),
+                                              if (recipe.category ==
+                                                  catNames[3])
+                                                Text(
+                                                  catSimbols[3],
+                                                  style: const TextStyle(
+                                                      fontSize: 20),
+                                                ),
+                                              Text(
+                                                recipe.title,
+                                                style: const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              Expanded(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    MacosIconButton(
+                                                      icon: const MacosIcon(
+                                                          CupertinoIcons.link),
+                                                      onPressed: (() {
+                                                        _launchUrl(recipe.link);
+                                                      }),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return const Text('No recipes found...');
+                                    }
+                                  }));
+                            },
+                          ),
+                        )),
+                      ],
+                    ),
                   ),
                 ),
               )

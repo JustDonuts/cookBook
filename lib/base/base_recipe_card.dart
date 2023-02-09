@@ -92,14 +92,14 @@ class RecipeCard extends StatelessWidget {
                         iconColor: Colors.white30,
                         iconSize: 22,
                         ratedIcon: (recipesCat == 'Breakfast and Brunch')
-                            ? Icons.cookie_rounded
+                            ? Icons.egg
                             : (recipesCat == 'Pasta')
                                 ? Icons.ramen_dining_rounded
                                 : (recipesCat == 'Mains')
                                     ? Icons.lunch_dining_rounded
                                     : Icons.cake,
                         unratedIcon: (recipesCat == 'Breakfast and Brunch')
-                            ? Icons.cookie_outlined
+                            ? Icons.egg_outlined
                             : (recipesCat == 'Pasta')
                                 ? Icons.ramen_dining_outlined
                                 : (recipesCat == 'Mains')

@@ -8,7 +8,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class ReadingListScreen extends StatefulWidget {
   const ReadingListScreen({super.key});
 
@@ -27,12 +26,7 @@ class _ReadingListScreenState extends State<ReadingListScreen> {
     'Desserts'
   ];
 
-  final List<String> catSimbols = <String>[
-    '🍳 ',
-    '🍝 ',
-    '🍔 ',
-    '🧁 '
-  ];
+  final List<String> catSimbols = <String>['🍳 ', '🍝 ', '🍔 ', '🧁 '];
 
   final _formKeyRead = GlobalKey<FormState>();
   String selectedCat = '';
@@ -54,7 +48,10 @@ class _ReadingListScreenState extends State<ReadingListScreen> {
         children: [
           const Padding(
             padding: EdgeInsets.fromLTRB(50, 50, 50, 10),
-            child: Text('Reading list', style: TextStyle(fontSize: 30),),
+            child: Text(
+              'Reading list',
+              style: TextStyle(fontSize: 30),
+            ),
           ),
           const Padding(
             padding: EdgeInsets.all(10.0),
@@ -85,7 +82,6 @@ class _ReadingListScreenState extends State<ReadingListScreen> {
                               onResultSelected: (resultItem) {
                                 selectedCat = resultItem.toString();
                                 catController.text = resultItem.searchKey;
-                                debugPrint(catController.text);
                               },
                             ),
                             MacosTextField(
@@ -116,6 +112,10 @@ class _ReadingListScreenState extends State<ReadingListScreen> {
               ),
             ),
           ),
+          if (recipes2readBox.isEmpty)
+            const Text(
+                'You have no recipes yet, add them by using the form above',
+                style: TextStyle(color: Colors.white30)),
           Expanded(
               child: Padding(
             padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
@@ -134,14 +134,25 @@ class _ReadingListScreenState extends State<ReadingListScreen> {
                           child: Row(
                             children: [
                               if (recipe.category == catNames[0])
-                              Text(catSimbols[0], style: const TextStyle(fontSize: 20),),
+                                Text(
+                                  catSimbols[0],
+                                  style: const TextStyle(fontSize: 20),
+                                ),
                               if (recipe.category == catNames[1])
-                              Text (catSimbols[1], style: const TextStyle(fontSize: 20),),
+                                Text(
+                                  catSimbols[1],
+                                  style: const TextStyle(fontSize: 20),
+                                ),
                               if (recipe.category == catNames[2])
-                              Text(catSimbols[2], style: const TextStyle(fontSize: 20),),
+                                Text(
+                                  catSimbols[2],
+                                  style: const TextStyle(fontSize: 20),
+                                ),
                               if (recipe.category == catNames[3])
-                              Text(catSimbols[3], style: const TextStyle(fontSize: 20),),
-
+                                Text(
+                                  catSimbols[3],
+                                  style: const TextStyle(fontSize: 20),
+                                ),
                               Text(
                                 recipe.title,
                                 style: const TextStyle(color: Colors.white),
@@ -150,12 +161,20 @@ class _ReadingListScreenState extends State<ReadingListScreen> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    MacosIconButton(icon: const MacosIcon(CupertinoIcons.link), onPressed: (() {
-                                      _launchUrl(recipe.link);
-                                    }),),
-                                    MacosIconButton(icon: const MacosIcon(CupertinoIcons.delete_left), onPressed: (() {
-                                      recipe.delete();
-                                    }),),
+                                    MacosIconButton(
+                                      icon:
+                                          const MacosIcon(CupertinoIcons.link),
+                                      onPressed: (() {
+                                        _launchUrl(recipe.link);
+                                      }),
+                                    ),
+                                    MacosIconButton(
+                                      icon: const MacosIcon(
+                                          CupertinoIcons.delete_left),
+                                      onPressed: (() {
+                                        recipe.delete();
+                                      }),
+                                    ),
                                   ],
                                 ),
                               )
@@ -180,8 +199,7 @@ class _ReadingListScreenState extends State<ReadingListScreen> {
       final recipe2read = ReadRecModel(
           title: titleController.text,
           link: linkController.text,
-          category: catController.text
-          );
+          category: catController.text);
       await recipes2readBox.add(recipe2read);
       titleController.clear();
       linkController.clear();
@@ -190,10 +208,8 @@ class _ReadingListScreenState extends State<ReadingListScreen> {
   }
 
   Future<void> _launchUrl(url) async {
-
-  if (!await launchUrl(Uri.parse(url))) {
-    throw Exception('Could not launch $url');
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
   }
-}
-
 }
