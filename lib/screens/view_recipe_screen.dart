@@ -225,7 +225,7 @@ class _RecipeViewerState extends State<RecipeViewer> {
                                                 (ingredientsQuantity[index] *
                                                         currentPortions /
                                                         portions)
-                                                    .toString(),
+                                                    .toStringAsFixed(2),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                               const SizedBox(

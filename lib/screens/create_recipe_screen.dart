@@ -382,7 +382,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                                                                 ? Icons
                                                                     .lunch_dining_outlined
                                                                 : Icons
-                                                                    .cake,
+                                                                    .cake_outlined,
                                                     amount: 5,
                                                     value: difficultyValue,
                                                     onChanged: (v) {
@@ -523,6 +523,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                                 children: [
                                   const Text('• '),
                                   Text(localQuantitiesList[index].toString()),
+                                  const Text(' '),
                                   Text(localUnitsList[index]),
                                   const Text(' '),
                                   Text(localIngredientsList[index]),
@@ -602,6 +603,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                           children: [
                             Flexible(
                               child: MacosTextField(
+                                autocorrect: true,
                                 focusNode: instructionsFocusNode,
                                 controller: localInstructionsController,
                                 placeholder: '$instructionIndex. Do this...',

@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MacosApp(
+      debugShowCheckedModeBanner: false,
       title: 'cookBook',
       theme: MacosThemeData(
           primaryColor: MacosThemeData.dark().primaryColor,
