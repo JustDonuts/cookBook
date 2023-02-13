@@ -1,8 +1,10 @@
-# cook_book_flutter
+# cookBook
 
-A new Flutter project.
+A simple Flutter app for MacOS to save, view and store your favourite recipes. 
 
-## Getting Started
+![alt text](https://user-images.githubusercontent.com/44927443/218345625-239b8a9a-3860-4958-b4f8-410287841c8f.png)
+
+## Getting Started!
 
 This project is a starting point for a Flutter application.
 
