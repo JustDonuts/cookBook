@@ -5,7 +5,10 @@ A simple Flutter app for MacOS to save and view and your favourite recipes.
 ![alt text](https://user-images.githubusercontent.com/44927443/220470271-01870291-ef17-4f08-8cbb-ddc8557c33cb.png)
 
 ## Overview
-This simple app allows you to write and save your favourite recipes. This is not my first Flutter project, but it is the first time using the amazing [MacOS UI](https://pub.dev/packages/macos_ui) package. 
+This simple app allows you to write and save your favourite recipes. This is not my first Flutter project, but it is my first time using the amazing [MacOS UI](https://pub.dev/packages/macos_ui) package.
+
+## Usage
+Run via Flutter, but you can also install it by follwing [this guide](https://retroportalstudio.medium.com/creating-dmg-file-for-flutter-macos-apps-e448ff1cb0f) to create a `.dmg` file.
 
 ## Main features
 The key features of the app are:
