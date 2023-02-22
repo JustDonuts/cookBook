@@ -13,20 +13,19 @@ class RecipeModel extends HiveObject {
   @HiveField(3)
   final int portions;
   @HiveField(4)
-final String portionsUnits;
-@HiveField(5)
-final List<String> instructions;
-@HiveField(6)
-final List<double> ingredientsQuantity;
-@HiveField(7)
-final List<String> ingredientsUnits;
-@HiveField(8)
-final List<String> ingredientsNames;
-@HiveField(9)
-final String? imagePath;
-@HiveField(10)
-final String category;
-
+  final String portionsUnits;
+  @HiveField(5)
+  final List<String> instructions;
+  @HiveField(6)
+  final List<double> ingredientsQuantity;
+  @HiveField(7)
+  final List<String> ingredientsUnits;
+  @HiveField(8)
+  final List<String> ingredientsNames;
+  @HiveField(9)
+  final String? imagePath;
+  @HiveField(10)
+  final String category;
 
   RecipeModel({
     required this.title,
@@ -40,14 +39,12 @@ final String category;
     required this.ingredientsNames,
     this.imagePath,
     required this.category,
-    
   });
 
   @override
   String toString() {
     return 'RecipeModel(Title: $title)';
   }
-
 
   @override
   bool operator ==(Object other) {

@@ -2,7 +2,6 @@ import 'package:cook_book_flutter/base/base_recipe_card.dart';
 import 'package:cook_book_flutter/models/recipe_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:macos_ui/macos_ui.dart';
 
@@ -16,8 +15,6 @@ class RecipeByCatScreen extends StatefulWidget {
 }
 
 class _RecipeByCatScreenState extends State<RecipeByCatScreen> {
-
-
   late Box<RecipeModel> recipeBox;
   late ValueListenable listenable;
 
@@ -28,30 +25,24 @@ class _RecipeByCatScreenState extends State<RecipeByCatScreen> {
     super.initState();
   }
 
-  bool isDarkMode() {
-    final darkMode = WidgetsBinding.instance.window.platformBrightness;
-    if (darkMode == Brightness.dark) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-
     return MacosScaffold(
-    
       children: [
         ContentArea(builder: (context, scrollController) {
           return Column(
             children: [
-               Padding(
-            padding: const EdgeInsets.all(50.0),
-            child: Text(widget.recipesCategory, style: const TextStyle(fontSize: 30),),
-          ),
-          if (recipeBox.isEmpty)
-          const Text('You have no recipes here yet, add them by using the button in the bottom left corner', style: TextStyle(color: Colors.white30)),
+              Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: Text(
+                  widget.recipesCategory,
+                  style: const TextStyle(fontSize: 30),
+                ),
+              ),
+              if (recipeBox.isEmpty)
+                const Text(
+                    'You have no recipes here yet, add them by using the button in the bottom left corner',
+                    style: TextStyle(color: Colors.white30)),
               Expanded(
                 child: Padding(
                     padding: const EdgeInsets.all(12.0),

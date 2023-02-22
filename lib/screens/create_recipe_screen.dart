@@ -36,7 +36,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
   bool hasImage = false;
 
-// Locals
   TextEditingController localQuantitiesController = TextEditingController();
   TextEditingController localUnitsController = TextEditingController();
   TextEditingController localIngredientsController = TextEditingController();

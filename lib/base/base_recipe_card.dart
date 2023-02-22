@@ -1,11 +1,7 @@
-import 'dart:async';
-import 'dart:io';
 
 import 'package:cook_book_flutter/screens/view_recipe_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class RecipeCard extends StatelessWidget {

@@ -11,11 +11,8 @@ class ReadRecModel extends HiveObject {
   @HiveField(2)
   final String category;
 
-  ReadRecModel({
-    required this.title,
-    required this.link,
-    required this.category
-  });
+  ReadRecModel(
+      {required this.title, required this.link, required this.category});
 
   @override
   String toString() {

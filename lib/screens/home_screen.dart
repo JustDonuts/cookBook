@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:hive/hive.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/readlist_recipe_model.dart';
@@ -88,20 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
         Expanded(
           child: Column(
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
-              //   child: Container(
-              //     constraints: const BoxConstraints(maxWidth: 1000),
-              //     child: SizedBox(
-              //         height: 400,
-              //         width: double.infinity,
-              //         child: Image.asset(
-              //           'assets/images/home_bg.jpg',
-              //           fit: BoxFit.cover,
-              //           alignment: Alignment.bottomCenter,
-              //         )),
-              //   ),
-              // ),
               if (hasRecipes)
                 const Padding(
                   padding: EdgeInsets.fromLTRB(60, 0, 60, 60),
@@ -111,15 +96,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(color: Colors.white38),
                   ),
                 ),
-        
-              // DOESNT TRIGGER ONCHANGED WHEN FIELD IS EMPTY
-              // MacosSearchField(
-              //   controller: searchbarController,
-              //   onChanged: ((_) {
-              //     debugPrint('test');
-              //     search(searchbarController.text);
-              //   }),
-              // ),
               SizedBox(
                 width: 300,
                 child: Row(
